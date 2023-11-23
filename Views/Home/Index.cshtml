@@ -1,0 +1,35 @@
+﻿@using Settings;
+@inject SettingService SettingService
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@functions {
+    public string UpdateData(string contractorId, string contractorName)
+    {
+        SettingService.ContractorID = contractorId;
+        SettingService.ContractorName = contractorName;
+
+        @* ViewBag *@
+        ViewBag.ContractorID = contractorId;
+        ViewBag.ContractorName = contractorName;
+
+        return "Settings Updated";
+    }
+}
+
+<input type="text" value="@SettingService.ContractorID">
+<input type="text" value="@SettingService.ContractorName">
+
+<button onclick="UpdateData(SettingService.ContractorID, SettingService.ContractorName)">Update Settings</button>
+
+<details open>
+    <summary>TagHelper</summary>
+    <vc:sidebar contractorId="1" contractorName="Sirwan" />
+    <vc:header />
+</details>
+<details>
+    <summary>Component.InvokeAsync</summary>
+    @await Component.InvokeAsync("Sidebar", new { contractorId = "123232", contractorName = "Sirwan" })
+    @await Component.InvokeAsync("Header")
+</details>
